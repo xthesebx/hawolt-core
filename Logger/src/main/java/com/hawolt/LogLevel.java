@@ -1,5 +1,5 @@
 package com.hawolt;
 
 public enum LogLevel {
-    ALL, DEBUG, INFO, WARN, ERROR, FATAL
+    ALL, INTERNAL, DEBUG, INFO, WARN, ERROR, FATAL
 }

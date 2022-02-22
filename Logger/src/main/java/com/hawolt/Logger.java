@@ -36,7 +36,7 @@ public class Logger {
                 String[] config = line.split("=", 2);
                 if (config.length == 2) {
                     LogSetting setting = LogSetting.find(config[0]);
-                    Logger.log(LogLevel.ALL, true, "{}:{}", setting.name(), config[1]);
+                    Logger.log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                     switch (setting) {
                         case FORMAT_DATE:
                             LOG_DATE_FORMAT = new SimpleDateFormat(config[1], Locale.US);
@@ -80,7 +80,7 @@ public class Logger {
                 }
             }
         } catch (IOException e) {
-            Logger.error(e);
+            Logger.log(LogLevel.INTERNAL, true, "No log.properties present");
         }
     }
 
@@ -129,6 +129,7 @@ public class Logger {
     }
 
     public static void log(LogLevel level, boolean linebreak, String format, Object... objects) {
+        System.out.println(level.name());
         if (level.ordinal() > MIN_LOG_LEVEL.ordinal()) {
             String line = "[" + LOG_DATE_FORMAT.format(new Date()) + "] [" + level.name() + "] " + format(format, objects);
             write(level, line, linebreak);
