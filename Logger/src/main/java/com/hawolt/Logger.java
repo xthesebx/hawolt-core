@@ -25,6 +25,9 @@ public class Logger {
     private static int ROLLOVER_INTERNAL = 0;
     private static FileWriter WRITER;
 
+    public static void shutdown() {
+        LOG_SERVICE.shutdown();
+    }
 
     static {
         try (InputStream stream = Core.getFileAsStream(Paths.get("log.properties"))) {
@@ -33,6 +36,7 @@ public class Logger {
                 String[] config = line.split("=", 2);
                 if (config.length == 2) {
                     LogSetting setting = LogSetting.find(config[0]);
+                    Logger.log(LogLevel.ALL, true, "{}:{}", setting.name(), config[1]);
                     switch (setting) {
                         case FORMAT_DATE:
                             LOG_DATE_FORMAT = new SimpleDateFormat(config[1], Locale.US);
