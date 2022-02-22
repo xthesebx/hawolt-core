@@ -129,8 +129,7 @@ public class Logger {
     }
 
     public static void log(LogLevel level, boolean linebreak, String format, Object... objects) {
-        System.out.println(level.name());
-        if (level.ordinal() > MIN_LOG_LEVEL.ordinal()) {
+        if (level.ordinal() >= MIN_LOG_LEVEL.ordinal()) {
             String line = "[" + LOG_DATE_FORMAT.format(new Date()) + "] [" + level.name() + "] " + format(format, objects);
             write(level, line, linebreak);
         }
