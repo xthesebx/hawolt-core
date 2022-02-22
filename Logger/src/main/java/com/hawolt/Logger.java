@@ -51,7 +51,7 @@ public class Logger {
                             LOG_TO_FILE = Boolean.parseBoolean(config[1]);
                             break;
                         case LOG_LEVEL:
-                            MIN_LOG_LEVEL = LogLevel.valueOf(config[1]);
+                            MIN_LOG_LEVEL = LogLevel.find(config[1]);
                             break;
                         case LOG_ROLLOVER:
                             ROLLOVER_INTERNAL = Integer.parseInt(config[1]);
