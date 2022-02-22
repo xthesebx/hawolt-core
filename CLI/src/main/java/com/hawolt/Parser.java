@@ -1,9 +1,9 @@
 package com.hawolt;
 
-public class Parser extends BaseParser {
+public class Parser extends CLI {
 
-    public BaseParser check(String[] args) throws ParserException {
-        BaseParser result = new BaseParser();
+    public CLI check(String[] args) throws ParserException {
+        CLI result = new CLI();
         for (Argument argument : this) {
             boolean found = false;
             for (int i = 0; i < args.length; i++) {

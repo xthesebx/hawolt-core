@@ -53,7 +53,7 @@ public class Argument {
 
     @Override
     public int hashCode() {
-        int strings = shortName.hashCode() + longName.hashCode() + description.hashCode() + (value != null ? value.hashCode() : 0);
+        int strings = shortName.hashCode() + longName.hashCode() + description.hashCode();
         int booleans = (mandatory ? 31 : 1) * (unique ? 37 : 1) * (flag ? 41 : 1);
         return 7 * (strings + booleans);
     }
