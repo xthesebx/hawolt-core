@@ -74,4 +74,8 @@ public class JsonSource {
     public boolean containsKey(String key) {
         return config.containsKey(key);
     }
+
+    public Map<String, String> getConfig() {
+        return config;
+    }
 }
