@@ -4,17 +4,6 @@ import java.io.*;
 import java.nio.file.Path;
 
 public class Core {
-    static {
-        if (!System.getProperty("hwc-suppress").equals("true")) {
-            System.out.print("\033[0;32m");
-            try {
-                System.out.println(read(getResourceAsStream("lion")).toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.print("\033[0m");
-        }
-    }
 
     public static InputStream getFileAsStream(Path path) throws FileNotFoundException {
         return new FileInputStream(path.toFile());
