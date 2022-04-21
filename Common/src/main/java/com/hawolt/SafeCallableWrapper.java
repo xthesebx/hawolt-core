@@ -1,6 +1,7 @@
 package com.hawolt;
 
 import java.util.Optional;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -9,18 +10,18 @@ import java.util.concurrent.Future;
  * Author: Twitter @hawolt
  **/
 
-public class SafeWrapper<T> {
+public class SafeCallableWrapper<T> {
 
-    private final Future<T> future;
+    private final Callable<T> callable;
 
-    public SafeWrapper(Future<T> future) {
-        this.future = future;
+    public SafeCallableWrapper(Callable<T> callable) {
+        this.callable = callable;
     }
 
     public Optional<T> get() {
         try {
-            return Optional.ofNullable(future.get());
-        } catch (InterruptedException | ExecutionException e) {
+            return Optional.ofNullable(callable.call());
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
