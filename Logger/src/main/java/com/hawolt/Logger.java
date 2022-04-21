@@ -133,19 +133,18 @@ public class Logger {
         }
     }
 
+    public static void error(Throwable throwable) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        throwable.printStackTrace(new PrintStream(out));
+        log(LogLevel.ERROR, false, "{}", out.toString());
+    }
+
     public static void fatal(String format, Object... objects) {
         log(LogLevel.FATAL, true, format, objects);
     }
 
     public static void warn(String format, Object... objects) {
         log(LogLevel.WARN, true, format, objects);
-    }
-
-
-    public static void error(Throwable throwable) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        throwable.printStackTrace(new PrintStream(out));
-        log(LogLevel.ERROR, false, "{}", out.toString());
     }
 
     public static void error(String format, Object... objects) {
@@ -158,5 +157,25 @@ public class Logger {
 
     public static void debug(String format, Object... objects) {
         log(LogLevel.DEBUG, true, format, objects);
+    }
+
+    public static void fatal(Object object) {
+        log(LogLevel.FATAL, true, "{}", object);
+    }
+
+    public static void warn(Object object) {
+        log(LogLevel.WARN, true, "{}", object);
+    }
+
+    public static void error(Object object) {
+        log(LogLevel.ERROR, true, "{}", object);
+    }
+
+    public static void info(Object object) {
+        log(LogLevel.INFO, true, "{}", object);
+    }
+
+    public static void debug(Object object) {
+        log(LogLevel.DEBUG, true, "{}", object);
     }
 }
