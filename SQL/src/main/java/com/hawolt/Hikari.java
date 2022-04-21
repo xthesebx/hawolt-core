@@ -22,14 +22,16 @@ public class Hikari {
 
     public static Hikari setup(String name, JsonSource source) {
         HikariConfig config = new HikariConfig();
-        String jdbc = String.format("jdbc:mariadb://%s:%s/%s",
-                source.get("maria.ip"),
-                source.get("maria.port"),
-                source.get("maria.database")
+        String jdbc = String.format("jdbc:%s://%s:%s/%s",
+                source.get("sql.driver"),
+                source.get("sql.ip"),
+                source.get("sql.port"),
+                source.get("sql.database")
         );
         config.setJdbcUrl(jdbc);
-        config.setUsername(source.get("maria.username"));
-        config.setPassword(source.get("maria.password"));
+        config.setUsername(source.get("sql.username"));
+        config.setPassword(source.get("sql.password"));
+        if (source.containsKey("sql.max")) config.setMaximumPoolSize(Integer.parseInt(source.get("sql.max")));
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
