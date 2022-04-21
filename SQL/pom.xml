@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>IO</artifactId>
+    <artifactId>SQL</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -17,11 +17,16 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20220320</version>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hawolt</groupId>
+            <artifactId>IO</artifactId>
+            <version>1.01</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

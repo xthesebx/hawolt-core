@@ -12,11 +12,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class Logger {
     private final static Object SYNCHRONIZED_LOCK = new Object();
-    private static final ExecutorService LOG_SERVICE = Executors.newSingleThreadExecutor();
     private static SimpleDateFormat LOG_DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.US);
     private static SimpleDateFormat LOG_FILE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy_HH-mm-ss", Locale.US);
     private static Path TARGET_DIRECTORY = Paths.get(System.getProperty("user.dir"));
@@ -24,10 +24,6 @@ public class Logger {
     private static LogLevel MIN_LOG_LEVEL = LogLevel.ALL;
     private static int ROLLOVER_INTERNAL = 0;
     private static FileWriter WRITER;
-
-    public static void shutdown() {
-        LOG_SERVICE.shutdown();
-    }
 
     static {
         try (InputStream stream = Core.getFileAsStream(Paths.get("log.properties"))) {
@@ -119,13 +115,15 @@ public class Logger {
     }
 
     private static void write(LogLevel level, String line, boolean linebreak) {
+        ExecutorService service = Executors.newSingleThreadExecutor();
         Runnable runnable = () -> {
             synchronized (SYNCHRONIZED_LOCK) {
                 if (LOG_TO_FILE) writeToFile(line, linebreak);
+                if (LOG_TO_CONSOLE) writeToOutputStream(level, line, linebreak);
             }
-            if (LOG_TO_CONSOLE) writeToOutputStream(level, line, linebreak);
         };
-        LOG_SERVICE.execute(runnable);
+        service.execute(runnable);
+        service.shutdown();
     }
 
     public static void log(LogLevel level, boolean linebreak, String format, Object... objects) {
