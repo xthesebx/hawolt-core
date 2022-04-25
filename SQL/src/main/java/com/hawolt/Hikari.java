@@ -7,16 +7,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Hikari {
 
-    private final ExecutorService service;
     private final HikariDataSource source;
 
-    public Hikari(HikariDataSource source, int size) {
-        this.service = Executors.newFixedThreadPool(size);
+    public Hikari(HikariDataSource source) {
         this.source = source;
     }
 
@@ -40,13 +36,9 @@ public class Hikari {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        Hikari hikari = new Hikari(new HikariDataSource(config), size);
+        Hikari hikari = new Hikari(new HikariDataSource(config));
         CONNECTION_MANAGERS.put(name, hikari);
         return hikari;
-    }
-
-    public ExecutorService getService() {
-        return service;
     }
 
     public Connection getConnection() throws SQLException {
