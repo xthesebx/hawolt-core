@@ -27,34 +27,45 @@ public class Logger {
 
     static {
         try (InputStream stream = Core.getFileAsStream(Paths.get("log.properties"))) {
-            String[] set = Core.read(stream).toString().split("\r\n");
+            String[] set = Core.read(stream).toString().split("\n");
             for (String line : set) {
-                String[] config = line.split("=", 2);
+                String[] config = line.trim().split("=", 2);
                 if (config.length == 2) {
                     LogSetting setting = LogSetting.find(config[0]);
-                    Logger.log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
+                    Logger.log(LogLevel.ALL, true, "ALL {}:{}", setting.name(), config[1]);
                     switch (setting) {
                         case FORMAT_DATE:
                             LOG_DATE_FORMAT = new SimpleDateFormat(config[1], Locale.US);
+                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
                         case FORMAT_FILE:
                             LOG_FILE_FORMAT = new SimpleDateFormat(config[1], Locale.US);
+                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
                         case DEST_CONSOLE:
                             LOG_TO_CONSOLE = Boolean.parseBoolean(config[1]);
+                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
                         case DEST_FILE:
                             LOG_TO_FILE = Boolean.parseBoolean(config[1]);
+                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
                         case LOG_LEVEL:
                             MIN_LOG_LEVEL = LogLevel.find(config[1]);
+                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
                         case LOG_ROLLOVER:
                             ROLLOVER_INTERNAL = Integer.parseInt(config[1]);
+                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
                         case LOG_DIR:
                             TARGET_DIRECTORY = Paths.get(config[1]);
+                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
+                        default:
+                            log(LogLevel.ALL, true, "DEFAULT {}:{}", setting.name(), config[1]);
+                            break;
+
                     }
                 }
             }
