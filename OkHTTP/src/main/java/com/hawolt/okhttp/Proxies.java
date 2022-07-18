@@ -2,6 +2,7 @@ package com.hawolt.okhttp;
 
 import java.net.Proxy;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,7 +12,7 @@ import java.util.Random;
  **/
 
 public class Proxies {
-    private final static List<ProxyWrapper> list = new ArrayList<>();
+    private final static List<ProxyWrapper> list = new LinkedList<>();
 
     private static final Object lock = new Object();
 
