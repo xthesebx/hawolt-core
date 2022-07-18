@@ -62,4 +62,33 @@ public class CLI extends HashSet<Argument> {
         }
         return builder.toString();
     }
+
+    public static String[] convert(String in) {
+        String[] actual = new String[0];
+        String[] basic = in.split(" ");
+        int offset = 0;
+        for (int i = 0; i < basic.length; i++) {
+            String current = basic[i];
+            if (!current.startsWith("\"")) {
+                actual = Arrays.copyOf(actual, actual.length + 1);
+                actual[offset++] = basic[i];
+            } else {
+                StringBuilder builder = new StringBuilder();
+                builder.append(current.substring(1));
+                do {
+                    int index = ++i;
+                    if (i >= basic.length) break;
+                    current = basic[index];
+                    if (!current.endsWith("\"")) {
+                        builder.append(" ").append(current);
+                    } else {
+                        builder.append(" ").append(current, 0, current.length() - 1);
+                    }
+                } while (!current.endsWith("\""));
+                actual = Arrays.copyOf(actual, actual.length + 1);
+                actual[offset++] = builder.toString();
+            }
+        }
+        return actual;
+    }
 }
