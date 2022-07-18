@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.cli;
 
 public class Parser extends CLI {
 

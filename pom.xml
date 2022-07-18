@@ -8,7 +8,7 @@
     <artifactId>HawoltCore</artifactId>
     <packaging>pom</packaging>
 
-    <version>1.01</version>
+    <version>1.02</version>
     <modules>
         <module>Logger</module>
         <module>Cryptography</module>
@@ -17,6 +17,7 @@
         <module>CLI</module>
         <module>Common</module>
         <module>SQL</module>
+        <module>OkHTTP</module>
     </modules>
 
     <properties>

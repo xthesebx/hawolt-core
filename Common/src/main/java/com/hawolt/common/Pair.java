@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.common;
 
 /**
  * Created: 18/04/2022 23:18

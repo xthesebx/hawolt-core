@@ -1,4 +1,6 @@
-package com.hawolt;
+package com.hawolt.logger;
+
+import com.hawolt.io.Core;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -12,7 +14,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class Logger {

@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.cryptography;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

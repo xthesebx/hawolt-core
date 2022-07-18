@@ -1,14 +1,14 @@
-package com.hawolt;
+package com.hawolt.cryptography;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class SHA256 {
+public class MD5 {
     public static String hash(String plain) {
         MessageDigest digest;
         try {
-            digest = MessageDigest.getInstance("SHA-256");
+            digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             return plain;
         }

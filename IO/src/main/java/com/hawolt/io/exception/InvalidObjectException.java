@@ -1,4 +1,4 @@
-package com.hawolt.exception;
+package com.hawolt.io.exception;
 
 public class InvalidObjectException extends RuntimeException {
 

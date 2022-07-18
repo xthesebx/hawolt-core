@@ -1,6 +1,6 @@
-package com.hawolt;
+package com.hawolt.http;
 
-import com.hawolt.misc.DownloadCallback;
+import com.hawolt.http.misc.DownloadCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

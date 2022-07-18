@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.logger;
 
 public enum LogSetting {
     UNKNOWN,

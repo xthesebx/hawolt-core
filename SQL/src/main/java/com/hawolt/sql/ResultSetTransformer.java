@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.sql;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

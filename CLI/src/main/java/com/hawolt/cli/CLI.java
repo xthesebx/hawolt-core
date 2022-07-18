@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.cli;
 
 import java.util.*;
 

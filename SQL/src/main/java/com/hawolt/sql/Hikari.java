@@ -1,5 +1,6 @@
-package com.hawolt;
+package com.hawolt.sql;
 
+import com.hawolt.io.JsonSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

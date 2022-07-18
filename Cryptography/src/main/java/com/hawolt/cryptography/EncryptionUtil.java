@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.cryptography;
 
 public class EncryptionUtil {
     public static String hexToString(String in) {

@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.logger;
 
 public enum LogLevel {
     ALL, INTERNAL, DEBUG, INFO, WARN, ERROR, FATAL;

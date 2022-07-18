@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.common;
 
 import java.util.Optional;
 import java.util.concurrent.Callable;
