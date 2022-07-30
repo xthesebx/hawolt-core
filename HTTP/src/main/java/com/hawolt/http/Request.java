@@ -61,6 +61,10 @@ public class Request {
         this.body = output;
     }
 
+    public Object getBody() {
+        return body;
+    }
+
     public Map<String, String> getHeaders() {
         return headers;
     }
