@@ -12,6 +12,7 @@ public class Response {
 
     private final int code;
     private final byte[] body;
+    private final Request request;
     private final DownloadCallback callback;
     private final Map<String, List<String>> headers;
 
@@ -20,6 +21,7 @@ public class Response {
     }
 
     public Response(Request request, DownloadCallback callback) throws IOException {
+        this.request = request;
         this.callback = callback;
         HttpURLConnection connection = request.getConnection();
         headers = connection.getHeaderFields();
@@ -64,5 +66,9 @@ public class Response {
 
     public Map<String, List<String>> getHeaders() {
         return headers;
+    }
+
+    public Request getOriginRequest() {
+        return request;
     }
 }
