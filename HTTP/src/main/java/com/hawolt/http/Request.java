@@ -44,9 +44,11 @@ public class Request {
             connection.addRequestProperty(header, headers.get(header));
         }
         connection.setDoOutput(output);
-        try (OutputStream out = connection.getOutputStream()) {
-            out.write(body.toString().getBytes());
-            out.flush();
+        if (output) {
+            try (OutputStream out = connection.getOutputStream()) {
+                out.write(body.toString().getBytes());
+                out.flush();
+            }
         }
         return this;
     }
