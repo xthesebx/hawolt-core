@@ -1,5 +1,5 @@
 package com.hawolt.http;
 
 public enum Method {
-    GET, POST, PUT, HEAD, DELETE, PATCH, OPTIONS;
+    GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH;
 }
