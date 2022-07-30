@@ -16,6 +16,7 @@ public class Request {
     private final boolean output;
     private final Method method;
     private final Proxy proxy;
+    private Object body;
 
     public Request(String endpoint) {
         this(endpoint, null);
@@ -43,6 +44,10 @@ public class Request {
             connection.addRequestProperty(header, headers.get(header));
         }
         connection.setDoOutput(output);
+        try (OutputStream out = connection.getOutputStream()) {
+            out.write(body.toString().getBytes());
+            out.flush();
+        }
         return this;
     }
 
@@ -50,11 +55,8 @@ public class Request {
         headers.put(key, value);
     }
 
-    public void write(Object output) throws IOException {
-        try (OutputStream out = connection.getOutputStream()) {
-            out.write(output.toString().getBytes());
-            out.flush();
-        }
+    public void write(Object output) {
+        this.body = output;
     }
 
     public Map<String, String> getHeaders() {
