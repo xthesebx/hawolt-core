@@ -6,13 +6,17 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.Proxy;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Request {
+    private final Map<String, String> headers = new HashMap<>();
     private HttpURLConnection connection;
     private final String endpoint;
     private final boolean output;
     private final Method method;
     private final Proxy proxy;
+    private Object body;
 
     public Request(String endpoint) {
         this(endpoint, null);
@@ -36,19 +40,33 @@ public class Request {
     private Request prepare() throws IOException {
         connection = BasicHttp.open(endpoint, proxy);
         connection.setRequestMethod(method.name());
+        for (String header : headers.keySet()) {
+            connection.addRequestProperty(header, headers.get(header));
+        }
         connection.setDoOutput(output);
+        if (output) {
+            try (OutputStream out = connection.getOutputStream()) {
+                out.write(body.toString().getBytes());
+                out.flush();
+            }
+        }
         return this;
     }
 
     public void addHeader(String key, String value) {
-        connection.addRequestProperty(key, value);
+        headers.put(key, value);
     }
 
-    public void write(Object output) throws IOException {
-        try (OutputStream out = connection.getOutputStream()) {
-            out.write(output.toString().getBytes());
-            out.flush();
-        }
+    public void write(Object output) {
+        this.body = output;
+    }
+
+    public Object getBody() {
+        return body;
+    }
+
+    public Map<String, String> getHeaders() {
+        return headers;
     }
 
     public String getEndpoint() {

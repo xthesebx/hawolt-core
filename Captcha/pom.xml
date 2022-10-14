@@ -9,25 +9,36 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>SQL</artifactId>
+    <artifactId>Captcha</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>4.0.3</version>
+            <groupId>com.github.hawolt.hawolt-core</groupId>
+            <artifactId>Logger</artifactId>
+            <version>2aaa753f18</version>
         </dependency>
         <dependency>
-            <groupId>com.hawolt</groupId>
-            <artifactId>IO</artifactId>
-            <version>1.03</version>
+            <groupId>com.github.hawolt.hawolt-core</groupId>
+            <artifactId>HTTP</artifactId>
+            <version>2aaa753f18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
 </project>
