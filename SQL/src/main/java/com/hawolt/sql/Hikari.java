@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class Hikari {
 
@@ -38,6 +40,16 @@ public class Hikari {
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         Hikari hikari = new Hikari(new HikariDataSource(config));
+        CONNECTION_MANAGERS.put(name, hikari);
+        return hikari;
+    }
+
+    public static Hikari setup(Supplier<HikariConfig> supplier) {
+        return setup("default", supplier);
+    }
+
+    public static Hikari setup(String name, Supplier<HikariConfig> supplier) {
+        Hikari hikari = new Hikari(new HikariDataSource(supplier.get()));
         CONNECTION_MANAGERS.put(name, hikari);
         return hikari;
     }
