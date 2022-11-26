@@ -99,7 +99,9 @@ public class Logger {
         do {
             indexOf = builder.indexOf("{}", indexOf + 1);
             if (indexOf >= 0) {
-                builder.replace(indexOf, indexOf + 2, objects[count++].toString());
+                String replacement = objects[count++].toString();
+                builder.replace(indexOf, indexOf + 2, replacement);
+                indexOf += replacement.length();
             }
         } while (indexOf != -1);
         return builder.toString();
