@@ -19,6 +19,7 @@
         <module>SQL</module>
         <module>OkHTTP</module>
         <module>Captcha</module>
+        <module>WSS</module>
     </modules>
 
     <properties>
