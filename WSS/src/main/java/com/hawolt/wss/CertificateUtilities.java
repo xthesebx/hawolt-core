@@ -40,10 +40,11 @@ public class CertificateUtilities {
         keystore.load(null);
         for (byte[] b : certificates) {
             String plain = parseKeyData(b, FileType.CERTIFICATE);
-            String checksum = MD5.hash(plain);
+            String keyEntry = MD5.hash(plain + FileType.PRIVATE_KEY);
+            String certificateEntry = MD5.hash(plain + FileType.CERTIFICATE);
             X509Certificate certificate = parseX509Certificate(plain);
-            keystore.setCertificateEntry(checksum, certificate);
-            keystore.setKeyEntry(checksum, rsa, PASSWORD.toCharArray(), new Certificate[]{certificate});
+            keystore.setCertificateEntry(certificateEntry, certificate);
+            keystore.setKeyEntry(keyEntry, rsa, PASSWORD.toCharArray(), new Certificate[]{certificate});
         }
         KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
         kmf.init(keystore, PASSWORD.toCharArray());
