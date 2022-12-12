@@ -31,9 +31,7 @@ public class CertificateUtilities {
 
     public static SSLContext getContext(KeyManager[] keyManagers, TrustManager[]... trustManagers) throws NoSuchAlgorithmException, KeyManagementException {
         SSLContext context = SSLContext.getInstance("TLS");
-        System.out.println("C1");
         context.init(keyManagers, trustManagers.length == 0 ? null : trustManagers[0], null);
-        System.out.println("C2");
         return context;
     }
 
