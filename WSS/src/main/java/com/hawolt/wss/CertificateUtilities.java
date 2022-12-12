@@ -38,10 +38,11 @@ public class CertificateUtilities {
     public static KeyManager[] buildKeyManagers(RSAPrivateKey rsa, byte[]... certificates) throws NoSuchAlgorithmException, CertificateException, KeyStoreException, UnrecoverableKeyException, IOException {
         KeyStore keystore = KeyStore.getInstance("JKS");
         keystore.load(null);
-        for (byte[] b : certificates) {
+        for (int i = 0; i < certificates.length; i++) {
+            byte[] b = certificates[i];
             String plain = parseKeyData(b, FileType.CERTIFICATE);
-            String keyEntry = MD5.hash(plain + FileType.PRIVATE_KEY);
-            String certificateEntry = MD5.hash(plain + FileType.CERTIFICATE);
+            String keyEntry = MD5.hash(plain + FileType.PRIVATE_KEY + i);
+            String certificateEntry = MD5.hash(plain + FileType.CERTIFICATE + i);
             X509Certificate certificate = parseX509Certificate(plain);
             keystore.setCertificateEntry(certificateEntry, certificate);
             keystore.setKeyEntry(keyEntry, rsa, PASSWORD.toCharArray(), new Certificate[]{certificate});
