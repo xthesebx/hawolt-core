@@ -12,7 +12,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
@@ -67,5 +69,17 @@ public abstract class SecureWSS extends ServerWSS {
     @Override
     public void onStart() {
         setConnectionLostTimeout(100);
+    }
+
+    public void forward(String message) {
+        List<WebSocket> list;
+        synchronized (getConnections()) {
+            list = new ArrayList<>(getConnections());
+        }
+        for (WebSocket webSocket : list) {
+            Entitlement entitlement = entitlements.get(webSocket.getRemoteSocketAddress().getHostString());
+            if (!entitlement.isVerified()) continue;
+            webSocket.send(message);
+        }
     }
 }
