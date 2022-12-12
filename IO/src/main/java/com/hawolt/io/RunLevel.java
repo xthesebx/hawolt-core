@@ -26,10 +26,10 @@ public enum RunLevel {
         }
     }
 
-    public static InputStream get(Class<?> o, String file) throws IOException {
+    public static InputStream get(String file) throws IOException {
         switch (_LEVEL) {
             case JAR:
-                return o.getResourceAsStream("/" + file);
+                return RunLevel.class.getResourceAsStream("/" + file);
             case FILE:
                 Path path = Paths.get(System.getProperty("user.dir")).resolve("src").resolve("main").resolve("resources").resolve(file);
                 return Files.newInputStream(path.toFile().toPath());
