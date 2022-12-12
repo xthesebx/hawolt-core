@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.wss;
 
 import com.hawolt.cryptography.MD5;
 

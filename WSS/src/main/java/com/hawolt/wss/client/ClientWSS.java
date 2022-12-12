@@ -1,6 +1,8 @@
-package com.hawolt;
+package com.hawolt.wss.client;
 
 import com.hawolt.io.Core;
+import com.hawolt.wss.CertificateUtilities;
+import com.hawolt.wss.SelfSignedTrustManager;
 import org.java_websocket.client.WebSocketClient;
 
 import javax.net.ssl.KeyManager;

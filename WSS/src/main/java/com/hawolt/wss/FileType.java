@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.wss;
 
 /**
  * Created: 12/12/2022 10:47

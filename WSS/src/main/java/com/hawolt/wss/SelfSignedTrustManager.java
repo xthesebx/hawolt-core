@@ -1,4 +1,4 @@
-package com.hawolt;
+package com.hawolt.wss;
 
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.X509Certificate;

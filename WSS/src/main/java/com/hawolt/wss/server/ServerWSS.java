@@ -1,6 +1,7 @@
-package com.hawolt;
+package com.hawolt.wss.server;
 
 import com.hawolt.io.Core;
+import com.hawolt.wss.CertificateUtilities;
 import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
 import org.java_websocket.server.WebSocketServer;
 
