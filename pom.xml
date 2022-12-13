@@ -20,6 +20,7 @@
         <module>OkHTTP</module>
         <module>Captcha</module>
         <module>WSS</module>
+        <module>TaskHTTP</module>
     </modules>
 
     <properties>
