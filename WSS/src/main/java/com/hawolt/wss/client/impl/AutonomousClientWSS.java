@@ -28,8 +28,9 @@ public abstract class AutonomousClientWSS extends SecureClientWSS {
         super(passphrase, serverUri, keyStream, certificateStreams);
     }
 
-    public void addCommand(Command command) {
+    public AutonomousClientWSS addCommand(Command command) {
         map.put(command.getName(), command);
+        return this;
     }
 
     @Override
