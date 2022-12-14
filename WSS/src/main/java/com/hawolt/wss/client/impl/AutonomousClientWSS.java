@@ -35,8 +35,9 @@ public abstract class AutonomousClientWSS extends SecureClientWSS {
         return this;
     }
 
-    public void setCommandIndex(int commandIndex) {
+    public AutonomousClientWSS setCommandIndex(int commandIndex) {
         this.commandIndex = commandIndex;
+        return this;
     }
 
     @Override
