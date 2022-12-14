@@ -24,6 +24,8 @@ public abstract class AutonomousClientWSS extends SecureClientWSS {
 
     private final Map<String, Command> map = new HashMap<>();
 
+    private int commandIndex;
+
     public AutonomousClientWSS(String passphrase, URI serverUri, InputStream keyStream, InputStream... certificateStreams) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException, UnrecoverableKeyException, CertificateException, KeyStoreException, KeyManagementException {
         super(passphrase, serverUri, keyStream, certificateStreams);
     }
@@ -33,11 +35,16 @@ public abstract class AutonomousClientWSS extends SecureClientWSS {
         return this;
     }
 
+    public void setCommandIndex(int commandIndex) {
+        this.commandIndex = commandIndex;
+    }
+
     @Override
     public void onMessage(String message) {
         String[] data = message.split(" ");
-        if (!map.containsKey(data[0])) return;
-        Command command = map.get(data[0]);
+        if (data.length < commandIndex) return;
+        if (!map.containsKey(data[commandIndex])) return;
+        Command command = map.get(data[commandIndex]);
         String response = command.perform(message);
         if (command.isResponseRequired()) send(response);
     }
