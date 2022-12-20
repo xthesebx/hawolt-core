@@ -8,7 +8,8 @@ public enum LogSetting {
     DEST_FILE,
     LOG_LEVEL,
     LOG_ROLLOVER,
-    LOG_DIR;
+    LOG_DIR,
+    BASE_STRUCTURE;
 
     private static final LogSetting[] LOG_SETTINGS = LogSetting.values();
 

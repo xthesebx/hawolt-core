@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -23,11 +24,20 @@ public class Logger {
     private static Path TARGET_DIRECTORY = Paths.get(System.getProperty("user.dir"));
     private static boolean LOG_TO_FILE, LOG_TO_CONSOLE = true;
     private static LogLevel MIN_LOG_LEVEL = LogLevel.ALL;
+    private static String BASE_STRUCTURE = "";
     private static int ROLLOVER_INTERNAL = 0;
     private static FileWriter WRITER;
 
     static {
         try (InputStream stream = Core.getFileAsStream(Paths.get("log.properties"))) {
+            load(stream);
+        } catch (IOException e) {
+            Logger.log(LogLevel.INTERNAL, true, "Unable to locate log.properties in default directory");
+        }
+    }
+
+    public static void load(InputStream stream) {
+        try {
             String[] set = Core.read(stream).toString().split("\n");
             for (String line : set) {
                 String[] config = line.trim().split("=", 2);
@@ -35,6 +45,10 @@ public class Logger {
                     LogSetting setting = LogSetting.find(config[0]);
                     Logger.log(LogLevel.ALL, true, "ALL {}:{}", setting.name(), config[1]);
                     switch (setting) {
+                        case BASE_STRUCTURE:
+                            BASE_STRUCTURE = config[1];
+                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
+                            break;
                         case FORMAT_DATE:
                             LOG_DATE_FORMAT = new SimpleDateFormat(config[1], Locale.US);
                             log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
@@ -87,19 +101,21 @@ public class Logger {
                     }, delayUntil, TimeUnit.DAYS.toMillis(ROLLOVER_INTERNAL), TimeUnit.MILLISECONDS);
                 }
             }
-        } catch (IOException e) {
-            Logger.log(LogLevel.INTERNAL, true, "No log.properties present");
+        } catch (Exception e) {
+            Logger.log(LogLevel.INTERNAL, true, "Error parsing provided property file");
         }
     }
 
     public static String format(String format, Object... objects) {
-        StringBuilder builder = new StringBuilder(format);
+        String[] base = BASE_STRUCTURE.split(",", 2);
+        Object[] values = form(base, objects);
+        StringBuilder builder = new StringBuilder(String.join(" ", base[0], format).trim());
         int count = 0;
         int indexOf = -1;
         do {
             indexOf = builder.indexOf("{}", indexOf + 1);
             if (indexOf >= 0) {
-                String replacement = getPlausibleCalling(objects[count++].toString());
+                String replacement = getPlausibleCalling(values[count++].toString());
                 builder.replace(indexOf, indexOf + 2, replacement);
                 indexOf += replacement.length();
             }
@@ -107,18 +123,19 @@ public class Logger {
         return builder.toString();
     }
 
+    private static Object[] form(String[] base, Object[] objects) {
+        if (base.length != 2) return objects;
+        Object[] leading = base[1].split(",");
+        Object[] replacement = new Object[leading.length + objects.length];
+        System.arraycopy(leading, 0, replacement, 0, leading.length);
+        System.arraycopy(objects, 0, replacement, leading.length, objects.length);
+        return replacement;
+    }
+
     private static String getPlausibleCalling(String replacement) {
-        switch (replacement) {
-            case "$METHOD":
-                replacement = getCallingMethodName();
-                break;
-            case "$CLASS":
-                replacement = getCallingClassName();
-                break;
-            case "$ORIGIN":
-                replacement = getCallingOrigin();
-                break;
-        }
+        if (replacement.contains("$METHOD")) replacement = replacement.replace("$METHOD", getCallingMethodName());
+        if (replacement.contains("$CLASS")) replacement = replacement.replace("$CLASS", getCallingClassName());
+        if (replacement.contains("$ORIGIN")) replacement = replacement.replace("$ORIGIN", getCallingOrigin());
         return replacement;
     }
 
@@ -162,6 +179,7 @@ public class Logger {
     }
 
     private static void writeToFile(String line, boolean linebreak) {
+        if (Logger.WRITER == null) return;
         try {
             Logger.WRITER.write(line);
             if (linebreak) Logger.WRITER.write(System.lineSeparator());
