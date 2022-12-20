@@ -99,12 +99,55 @@ public class Logger {
         do {
             indexOf = builder.indexOf("{}", indexOf + 1);
             if (indexOf >= 0) {
-                String replacement = objects[count++].toString();
+                String replacement = getPlausibleCalling(objects[count++].toString());
                 builder.replace(indexOf, indexOf + 2, replacement);
                 indexOf += replacement.length();
             }
         } while (indexOf != -1);
         return builder.toString();
+    }
+
+    private static String getPlausibleCalling(String replacement) {
+        switch (replacement) {
+            case "$METHOD":
+                replacement = getCallingMethodName();
+                break;
+            case "$CLASS":
+                replacement = getCallingClassName();
+                break;
+            case "$ORIGIN":
+                replacement = getCallingOrigin();
+                break;
+        }
+        return replacement;
+    }
+
+    private static StackTraceElement getFirstPlausible(StackTraceElement[] elements) {
+        for (int i = elements.length - 1; i >= 0; i--) {
+            StackTraceElement element = elements[i];
+            if (element.getClassName().startsWith("com.hawolt.logger.Logger")) continue;
+            return element;
+        }
+        return elements[elements.length - 1];
+    }
+
+    private static String getCallingOrigin() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        StackTraceElement element = getFirstPlausible(stackTrace);
+        return String.join("::", element.getClassName(), element.getMethodName());
+    }
+
+
+    private static String getCallingClassName() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        StackTraceElement element = getFirstPlausible(stackTrace);
+        return element.getClassName();
+    }
+
+    private static String getCallingMethodName() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        StackTraceElement element = getFirstPlausible(stackTrace);
+        return element.getMethodName();
     }
 
     private static void writeToOutputStream(LogLevel level, String line, boolean linebreak) {
