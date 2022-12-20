@@ -140,7 +140,7 @@ public class Logger {
     }
 
     private static StackTraceElement getFirstPlausible(StackTraceElement[] elements) {
-        for (int i = elements.length - 1; i >= 0; i--) {
+        for (int i = 1; i < elements.length; i++) {
             StackTraceElement element = elements[i];
             if (element.getClassName().startsWith("com.hawolt.logger.Logger")) continue;
             return element;
