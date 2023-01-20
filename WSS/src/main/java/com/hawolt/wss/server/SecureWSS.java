@@ -68,7 +68,7 @@ public abstract class SecureWSS extends ServerWSS {
         onVerifiedMessage(webSocket, s);
     }
 
-    abstract void onVerifiedMessage(WebSocket webSocket, String message);
+    public abstract void onVerifiedMessage(WebSocket webSocket, String message);
 
     @Override
     public void onStart() {
