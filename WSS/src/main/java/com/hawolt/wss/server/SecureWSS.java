@@ -64,7 +64,11 @@ public abstract class SecureWSS extends ServerWSS {
             webSocket.send("> 003 : You have found your passage.");
             entitlement.getFuture().complete(true);
         }
+        if (!entitlement.isVerified()) return;
+        onVerifiedMessage(webSocket, s);
     }
+
+    abstract void onVerifiedMessage(WebSocket webSocket, String message);
 
     @Override
     public void onStart() {
