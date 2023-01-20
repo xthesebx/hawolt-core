@@ -40,8 +40,11 @@ public abstract class AutonomousClientWSS extends SecureClientWSS {
         return this;
     }
 
+    public abstract void before(String message);
+
     @Override
     public void onMessage(String message) {
+        before(message);
         String[] data = message.split(" ");
         if (data.length < commandIndex) return;
         if (!map.containsKey(data[commandIndex])) return;
