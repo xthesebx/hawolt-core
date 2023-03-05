@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -43,7 +42,6 @@ public class Logger {
                 String[] config = line.trim().split("=", 2);
                 if (config.length == 2) {
                     LogSetting setting = LogSetting.find(config[0]);
-                    Logger.log(LogLevel.ALL, true, "ALL {}:{}", setting.name(), config[1]);
                     switch (setting) {
                         case BASE_STRUCTURE:
                             BASE_STRUCTURE = config[1];
@@ -107,8 +105,9 @@ public class Logger {
     }
 
     public static String format(String format, Object... objects) {
+        //boolean configured = BASE_STRUCTURE.length() == 0;
         String[] base = BASE_STRUCTURE.split(",", 2);
-        Object[] values = form(base, objects);
+        Object[] values = form(base, objects); //configured ? objects :
         StringBuilder builder = new StringBuilder(String.join(" ", base[0], format).trim());
         int count = 0;
         int indexOf = -1;
@@ -117,7 +116,7 @@ public class Logger {
             if (indexOf >= 0) {
                 String replacement = getPlausibleCalling(values[count++].toString());
                 builder.replace(indexOf, indexOf + 2, replacement);
-                indexOf += replacement.length();
+                indexOf += replacement.length() - 1;
             }
         } while (indexOf != -1);
         return builder.toString();
@@ -133,9 +132,12 @@ public class Logger {
     }
 
     private static String getPlausibleCalling(String replacement) {
-        if (replacement.contains("$METHOD")) replacement = replacement.replace("$METHOD", getCallingMethodName());
-        if (replacement.contains("$CLASS")) replacement = replacement.replace("$CLASS", getCallingClassName());
-        if (replacement.contains("$ORIGIN")) replacement = replacement.replace("$ORIGIN", getCallingOrigin());
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        if (replacement.contains("$METHOD"))
+            replacement = replacement.replace("$METHOD", getCallingMethodName(stackTrace));
+        if (replacement.contains("$CLASS"))
+            replacement = replacement.replace("$CLASS", getCallingClassName(stackTrace));
+        if (replacement.contains("$ORIGIN")) replacement = replacement.replace("$ORIGIN", getCallingOrigin(stackTrace));
         return replacement;
     }
 
@@ -148,21 +150,18 @@ public class Logger {
         return elements[elements.length - 1];
     }
 
-    private static String getCallingOrigin() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+    private static String getCallingOrigin(StackTraceElement[] stackTrace) {
         StackTraceElement element = getFirstPlausible(stackTrace);
         return String.join("::", element.getClassName(), element.getMethodName());
     }
 
 
-    private static String getCallingClassName() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+    private static String getCallingClassName(StackTraceElement[] stackTrace) {
         StackTraceElement element = getFirstPlausible(stackTrace);
         return element.getClassName();
     }
 
-    private static String getCallingMethodName() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+    private static String getCallingMethodName(StackTraceElement[] stackTrace) {
         StackTraceElement element = getFirstPlausible(stackTrace);
         return element.getMethodName();
     }
