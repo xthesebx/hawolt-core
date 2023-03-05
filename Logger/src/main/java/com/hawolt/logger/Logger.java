@@ -1,6 +1,7 @@
 package com.hawolt.logger;
 
 import com.hawolt.io.Core;
+import com.hawolt.io.RunLevel;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -28,7 +29,7 @@ public class Logger {
     private static FileWriter WRITER;
 
     static {
-        try (InputStream stream = Core.getFileAsStream(Paths.get("log.properties"))) {
+        try (InputStream stream = RunLevel.get("log.properties")) {
             load(stream);
         } catch (IOException e) {
             Logger.log(LogLevel.INTERNAL, true, "Unable to locate log.properties in default directory");
@@ -105,9 +106,8 @@ public class Logger {
     }
 
     public static String format(String format, Object... objects) {
-        //boolean configured = BASE_STRUCTURE.length() == 0;
         String[] base = BASE_STRUCTURE.split(",", 2);
-        Object[] values = form(base, objects); //configured ? objects :
+        Object[] values = form(base, objects);
         StringBuilder builder = new StringBuilder(String.join(" ", base[0], format).trim());
         int count = 0;
         int indexOf = -1;
