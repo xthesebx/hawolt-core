@@ -1,6 +1,9 @@
 package com.hawolt;
 
 
+import com.hawolt.exception.CaptchaException;
+
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -10,4 +13,6 @@ import java.util.concurrent.CompletableFuture;
 
 public interface ICaptchaTask {
     CompletableFuture<ICaptchaResult> solve();
+
+    ICaptchaResult get() throws IOException, CaptchaException;
 }

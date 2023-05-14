@@ -35,7 +35,8 @@ public class AntiCaptchaTask implements ICaptchaTask {
         this.client = client;
     }
 
-    private AntiCaptchaResult get() throws IOException, CaptchaException {
+    @Override
+    public AntiCaptchaResult get() throws IOException, CaptchaException {
         Request request = new Request("https://api.anti-captcha.com/getTaskResult", Method.POST, true);
         JSONObject payload = new JSONObject();
         payload.put("clientKey", client);
