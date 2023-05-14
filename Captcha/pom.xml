@@ -27,12 +27,12 @@
         <dependency>
             <groupId>com.github.hawolt.hawolt-core</groupId>
             <artifactId>Logger</artifactId>
-            <version>2aaa753f18</version>
+            <version>79b7ffbafc</version>
         </dependency>
         <dependency>
             <groupId>com.github.hawolt.hawolt-core</groupId>
             <artifactId>HTTP</artifactId>
-            <version>2aaa753f18</version>
+            <version>79b7ffbafc</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
