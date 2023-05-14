@@ -74,8 +74,6 @@ public class AntiCaptcha implements ICaptchaService, ICaptchaSolver {
         JSONObject task = new JSONObject();
         task.put("type", ((ICaptchaType) map.get("type")).getName());
         switch (name) {
-            case "HCaptchaTaskProxyless":
-                task.put("userAgent", map.get("userAgent"));
             case "RecaptchaV2TaskProxyless":
                 task.put("websiteKey", map.get("websiteKey"));
                 task.put("websiteURL", map.get("websiteURL"));

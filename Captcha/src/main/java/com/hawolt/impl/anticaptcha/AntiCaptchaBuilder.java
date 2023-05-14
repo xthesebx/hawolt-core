@@ -76,7 +76,7 @@ public class AntiCaptchaBuilder {
         @Override
         public Map<String, Object> get() {
             Map<String, Object> map = new HashMap<>();
-            map.put("userAgent", builder.userAgent);
+            if (builder.object != null) map.put("enterprisePayload", builder.object);
             map.put("isInvisible", builder.isInvisible);
             map.put("websiteURL", builder.websiteURL);
             map.put("websiteKey", builder.websiteKey);
@@ -87,7 +87,7 @@ public class AntiCaptchaBuilder {
         public static class Builder {
             private JSONObject object;
             private final ICaptchaType type;
-            private String websiteURL, websiteKey, userAgent;
+            private String websiteURL, websiteKey;
             private boolean isInvisible;
 
             public Builder() {
@@ -110,11 +110,6 @@ public class AntiCaptchaBuilder {
 
             public Builder setWebsiteKey(String websiteKey) {
                 this.websiteKey = websiteKey;
-                return this;
-            }
-
-            public Builder setUserAgent(String userAgent) {
-                this.userAgent = userAgent;
                 return this;
             }
 

@@ -12,7 +12,7 @@ public class AntiCaptchaResult implements ICaptchaResult {
     public static final AntiCaptchaResult FAILURE = new AntiCaptchaResult();
 
     private double cost;
-    private String solution;
+    private String solution, userAgent;
     private long createdAt, solvedAt;
     private int solveCount, errorId;
     private String ip, status;
@@ -23,7 +23,9 @@ public class AntiCaptchaResult implements ICaptchaResult {
     }
 
     public AntiCaptchaResult(JSONObject tmp) {
-        this.solution = tmp.getJSONObject("solution").getString("gRecaptchaResponse");
+        JSONObject solution = tmp.getJSONObject("solution");
+        this.solution = solution.getString("gRecaptchaResponse");
+        this.userAgent = solution.getString("userAgent");
         this.createdAt = tmp.getLong("createTime");
         this.solveCount = tmp.getInt("solveCount");
         this.solvedAt = tmp.getLong("endTime");
@@ -31,6 +33,10 @@ public class AntiCaptchaResult implements ICaptchaResult {
         this.errorId = tmp.getInt("errorId");
         this.cost = tmp.getDouble("cost");
         this.ip = tmp.getString("ip");
+    }
+
+    public String getUserAgent() {
+        return userAgent;
     }
 
     public double getCost() {
