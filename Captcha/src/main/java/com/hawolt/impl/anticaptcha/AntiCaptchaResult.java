@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 public class AntiCaptchaResult implements ICaptchaResult {
     public static final AntiCaptchaResult FAILURE = new AntiCaptchaResult();
-
+    private JSONObject source;
     private double cost;
     private String solution, userAgent;
     private long createdAt, solvedAt;
@@ -33,6 +33,11 @@ public class AntiCaptchaResult implements ICaptchaResult {
         this.errorId = tmp.getInt("errorId");
         this.cost = tmp.getDouble("cost");
         this.ip = tmp.getString("ip");
+        this.source = tmp;
+    }
+
+    public JSONObject getSource() {
+        return source;
     }
 
     public String getUserAgent() {
