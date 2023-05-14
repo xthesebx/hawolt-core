@@ -67,7 +67,7 @@ public class AntiCaptcha implements ICaptchaService, ICaptchaSolver {
         JSONObject tmp = new JSONObject(response.getBodyAsString());
         AntiCaptchaError type = AntiCaptchaError.find(tmp);
         if (type == AntiCaptchaError.NO_ERROR) return new AntiCaptchaTask(client, tmp.getLong("taskId"));
-        else throw new CaptchaException(type.getDescription());
+        else throw new AntiCaptchaException(type.getDescription(), tmp);
     }
 
     private JSONObject build(String name, Map<String, Object> map) {
