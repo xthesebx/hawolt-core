@@ -62,6 +62,7 @@ public class AntiCaptcha implements ICaptchaService, ICaptchaSolver {
         JSONObject payload = new JSONObject();
         payload.put("clientKey", client);
         payload.put("task", task);
+        System.out.println(payload);
         request.write(payload);
         Response response = request.execute();
         JSONObject tmp = new JSONObject(response.getBodyAsString());
@@ -76,6 +77,7 @@ public class AntiCaptcha implements ICaptchaService, ICaptchaSolver {
         switch (name) {
             case "HCaptchaTaskProxyless":
                 if (map.containsKey("enterprisePayload")) task.put("enterprisePayload", map.get("enterprisePayload"));
+                if (map.containsKey("userAgent")) task.put("userAgent", map.get("userAgent"));
                 task.put("isInvisible", map.get("isInvisible"));
                 task.put("websiteKey", map.get("websiteKey"));
                 task.put("websiteURL", map.get("websiteURL"));
