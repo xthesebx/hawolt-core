@@ -10,12 +10,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Logger</artifactId>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
-            <groupId>com.hawolt</groupId>
+            <groupId>com.github.hawolt.hawolt-core</groupId>
             <artifactId>IO</artifactId>
-            <version>1.031</version>
-            <scope>compile</scope>
+            <version>c719a7e1f3</version>
         </dependency>
     </dependencies>
 
