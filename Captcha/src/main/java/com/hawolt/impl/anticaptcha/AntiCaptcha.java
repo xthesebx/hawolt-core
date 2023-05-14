@@ -75,6 +75,11 @@ public class AntiCaptcha implements ICaptchaService, ICaptchaSolver {
         task.put("type", ((ICaptchaType) map.get("type")).getName());
         switch (name) {
             case "HCaptchaTaskProxyless":
+                if (map.containsKey("enterprisePayload")) task.put("enterprisePayload", map.get("enterprisePayload"));
+                task.put("isInvisible", map.get("isInvisible"));
+                task.put("websiteKey", map.get("websiteKey"));
+                task.put("websiteURL", map.get("websiteURL"));
+                return task;
             case "RecaptchaV2TaskProxyless":
                 task.put("websiteKey", map.get("websiteKey"));
                 task.put("websiteURL", map.get("websiteURL"));
