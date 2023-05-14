@@ -51,7 +51,7 @@ public class AntiCaptchaTask implements ICaptchaTask {
             } else {
                 return new AntiCaptchaResult(tmp);
             }
-        } else throw new CaptchaException(type.getDescription());
+        } else throw new AntiCaptchaException(type.getDescription(), tmp);
     }
 
     private ScheduledFuture<?> future;
