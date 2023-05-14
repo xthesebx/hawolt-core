@@ -2,6 +2,7 @@ package com.hawolt.impl.anticaptcha;
 
 import com.hawolt.ICaptchaProvider;
 import com.hawolt.ICaptchaType;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,6 +85,7 @@ public class AntiCaptchaBuilder {
         }
 
         public static class Builder {
+            private JSONObject object;
             private final ICaptchaType type;
             private String websiteURL, websiteKey, userAgent;
             private boolean isInvisible;
@@ -94,6 +96,11 @@ public class AntiCaptchaBuilder {
 
             public HCaptchaTaskProxyless build() {
                 return new HCaptchaTaskProxyless(this);
+            }
+
+            public Builder setEnterpriseData(JSONObject object) {
+                this.object = object;
+                return this;
             }
 
             public Builder setWebsiteURL(String websiteURL) {
