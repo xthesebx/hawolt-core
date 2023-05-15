@@ -28,11 +28,6 @@
             <artifactId>json</artifactId>
             <version>20220320</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.hawolt.hawolt-core</groupId>
-            <artifactId>Logger</artifactId>
-            <version>4444214c98</version>
-        </dependency>
     </dependencies>
 
 </project>

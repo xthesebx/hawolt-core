@@ -1,7 +1,5 @@
 package com.hawolt.io;
 
-import com.hawolt.logger.Logger;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,15 +19,13 @@ public enum RunLevel {
     final static RunLevel _LEVEL;
 
     static {
-        Logger.debug("Checking environment");
         URL url = RunLevel.class.getResource("RunLevel.class");
         if (url == null) {
-            Logger.debug("Unable to figure out environment");
             _LEVEL = RunLevel.UNKNOWN;
         } else {
             String plain = url.toString();
             _LEVEL = plain.startsWith("file") ? FILE : plain.startsWith("jar") ? JAR : UNKNOWN;
-            Logger.debug("Environment: {}", _LEVEL.name());
+            System.out.println("Environment: " + _LEVEL.name());
         }
     }
 
