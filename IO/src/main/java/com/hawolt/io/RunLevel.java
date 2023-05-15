@@ -24,15 +24,22 @@ public enum RunLevel {
             _LEVEL = RunLevel.UNKNOWN;
         } else {
             String plain = url.toString();
+            System.out.println("Detected RunLevel.class: " + plain);
             _LEVEL = plain.startsWith("file") ? FILE : plain.startsWith("jar") ? JAR : UNKNOWN;
             System.out.println("Environment: " + _LEVEL.name());
         }
     }
 
     public static InputStream get(String file) throws IOException {
-        switch (_LEVEL) {
+        return get(file, _LEVEL);
+    }
+
+    public static InputStream get(String file, RunLevel level) throws IOException {
+        switch (level) {
             case JAR:
-                return RunLevel.class.getResourceAsStream("/" + file);
+                InputStream stream = RunLevel.class.getResourceAsStream("/" + file);
+                if (stream == null) return get(file, RunLevel.FILE);
+                return stream;
             case FILE:
                 Path path = Paths.get(System.getProperty("user.dir")).resolve("src").resolve("main").resolve("resources").resolve(file);
                 return Files.newInputStream(path.toFile().toPath());
