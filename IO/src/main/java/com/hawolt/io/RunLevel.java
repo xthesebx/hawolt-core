@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 public enum RunLevel {
     JAR, FILE, UNKNOWN;
 
-    final static RunLevel _LEVEL;
+    private final static RunLevel _LEVEL;
 
     static {
         URL url = RunLevel.class.getResource("RunLevel.class");
@@ -24,10 +24,12 @@ public enum RunLevel {
             _LEVEL = RunLevel.UNKNOWN;
         } else {
             String plain = url.toString();
-            System.out.println("Detected RunLevel.class: " + plain);
             _LEVEL = plain.startsWith("file") ? FILE : plain.startsWith("jar") ? JAR : UNKNOWN;
-            System.out.println("Environment: " + _LEVEL.name());
         }
+    }
+
+    public static RunLevel getLevel() {
+        return _LEVEL;
     }
 
     public static InputStream get(String file) throws IOException {
