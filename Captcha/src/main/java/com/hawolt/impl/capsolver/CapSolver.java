@@ -63,7 +63,6 @@ public class CapSolver implements ICaptchaService, ICaptchaSolver {
         payload.put("appId", "B29452B3-3CEE-401D-BE6D-BF3B5F3DBAEE");
         payload.put("clientKey", client);
         payload.put("task", task);
-        System.out.println(payload);
         request.write(payload);
         Response response = request.execute();
         JSONObject tmp = new JSONObject(response.getBodyAsString());
