@@ -27,18 +27,17 @@
         <dependency>
             <groupId>com.github.hawolt.hawolt-core</groupId>
             <artifactId>Logger</artifactId>
-            <version>79b7ffbafc</version>
+            <version>af5ee5bd75</version>
         </dependency>
         <dependency>
             <groupId>com.github.hawolt.hawolt-core</groupId>
             <artifactId>HTTP</artifactId>
-            <version>79b7ffbafc</version>
+            <version>af5ee5bd75</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20220320</version>
-            <scope>compile</scope>
+            <version>20230618</version>
         </dependency>
     </dependencies>
 </project>
