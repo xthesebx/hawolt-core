@@ -39,7 +39,7 @@ public class AntiCaptcha implements ICaptchaService, ICaptchaSolver {
 
     @Override
     public double getBalance() throws IOException, CaptchaException {
-        Request request = new Request(" https://api.anti-captcha.com/getBalance", Method.POST, true);
+        Request request = new Request("https://api.anti-captcha.com/getBalance", Method.POST, true);
         JSONObject payload = new JSONObject();
         payload.put("clientKey", client);
         request.write(payload);
