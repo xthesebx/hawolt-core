@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JsonSource {
+    public static JsonSource of(InputStream stream) throws IOException {
+        return JsonSource.of(Core.read(stream).toString());
+    }
 
     public static JsonSource of(Path path) throws IOException {
         try (InputStream stream = Core.getFileAsStream(path)) {
