@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Hikari {
@@ -20,17 +19,21 @@ public class Hikari {
     }
 
     public static Hikari setup(JsonSource source) {
-        return setup("default", source);
-    }
-
-    public static Hikari setup(String name, JsonSource source) {
-        HikariConfig config = new HikariConfig();
         String jdbc = String.format("jdbc:%s://%s:%s/%s",
                 source.get("sql.driver"),
                 source.get("sql.ip"),
                 source.get("sql.port"),
                 source.get("sql.database")
         );
+        return setup("default", jdbc, source);
+    }
+
+    public static Hikari setup(String jdbc, JsonSource source) {
+        return setup("default", jdbc, source);
+    }
+
+    public static Hikari setup(String name, String jdbc, JsonSource source) {
+        HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jdbc);
         config.setUsername(source.get("sql.username"));
         config.setPassword(source.get("sql.password"));
