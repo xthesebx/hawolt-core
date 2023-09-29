@@ -5,6 +5,7 @@ import com.hawolt.io.RunLevel;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -37,7 +38,11 @@ public class Logger {
                 Logger.log(LogLevel.INTERNAL, true, "Unable to locate log.properties in default directory");
             }
         } catch (IOException e) {
-            Logger.error(e);
+            if (e instanceof NoSuchFileException) {
+                Logger.warn("Unable to locate log.properties");
+            } else {
+                Logger.error(e);
+            }
         }
     }
 

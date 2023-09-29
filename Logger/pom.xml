@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.github.hawolt.hawolt-core</groupId>
             <artifactId>IO</artifactId>
-            <version>72ece93e8a</version>
+            <version>06dfb5826b</version>
         </dependency>
     </dependencies>
 
