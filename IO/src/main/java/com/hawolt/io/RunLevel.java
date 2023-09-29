@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -16,7 +17,7 @@ import java.nio.file.Paths;
 public enum RunLevel {
     JAR, FILE, UNKNOWN;
 
-    private final static RunLevel _LEVEL;
+    private static final RunLevel _LEVEL;
 
     static {
         URL url = RunLevel.class.getResource("RunLevel.class");
@@ -25,6 +26,16 @@ public enum RunLevel {
         } else {
             String plain = url.toString();
             _LEVEL = plain.startsWith("file") ? FILE : plain.startsWith("jar") ? JAR : UNKNOWN;
+        }
+    }
+
+    public static RunLevel getLevel(Class<?> klass) {
+        URL url = klass.getResource(String.join(".", klass.getSimpleName(), "class"));
+        if (url == null) {
+            return RunLevel.UNKNOWN;
+        } else {
+            String plain = url.toString();
+            return plain.startsWith("file") ? FILE : plain.startsWith("jar") ? JAR : UNKNOWN;
         }
     }
 
@@ -43,8 +54,16 @@ public enum RunLevel {
                 if (stream == null) return get(file, RunLevel.FILE);
                 return stream;
             case FILE:
-                Path path = Paths.get(System.getProperty("user.dir")).resolve("src").resolve("main").resolve("resources").resolve(file);
-                return Files.newInputStream(path.toFile().toPath());
+                Path base = Paths.get(System.getProperty("user.dir"));
+                Path root = base.resolve(file);
+                Path resource = base.resolve("src").resolve("main").resolve("resources").resolve(file);
+                if (root.toFile().exists()) {
+                    return Files.newInputStream(root.toFile().toPath());
+                } else if (resource.toFile().exists()) {
+                    return Files.newInputStream(resource.toFile().toPath());
+                } else {
+                    throw new NoSuchFileException(file);
+                }
         }
         return new ByteArrayInputStream(new byte[0]);
     }
