@@ -1,6 +1,7 @@
 package com.hawolt.logger;
 
 import com.hawolt.io.Core;
+import com.hawolt.io.RunLevel;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -28,10 +29,15 @@ public class Logger {
     private static FileWriter WRITER;
 
     static {
-        try (InputStream stream = Core.getFileAsStream(Paths.get("log.properties"))) {
-            load(stream);
+        try {
+            InputStream dynamic = RunLevel.get("log.properties");
+            try (InputStream stream = dynamic != null ? dynamic : Core.getFileAsStream(Paths.get("log.properties"))) {
+                load(stream);
+            } catch (IOException e) {
+                Logger.log(LogLevel.INTERNAL, true, "Unable to locate log.properties in default directory");
+            }
         } catch (IOException e) {
-            Logger.log(LogLevel.INTERNAL, true, "Unable to locate log.properties in default directory");
+            Logger.error(e);
         }
     }
 
