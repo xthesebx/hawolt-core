@@ -90,6 +90,8 @@ public class Logger {
                             log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
                         case LOG_DIR:
+                            config[1] = config[1].replace("${HOME}", System.getProperty("user.home"));
+                            config[1] = config[1].replace("${TEMP}", System.getProperty("java.io.tmpdir"));
                             TARGET_DIRECTORY = Paths.get(config[1]);
                             log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
                             break;
