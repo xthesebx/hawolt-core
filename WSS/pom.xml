@@ -31,16 +31,14 @@
             <version>1.5.3</version>
         </dependency>
         <dependency>
-            <groupId>com.hawolt</groupId>
+            <groupId>com.github.hawolt.hawolt-core</groupId>
             <artifactId>Cryptography</artifactId>
-            <version>1.031</version>
-            <scope>compile</scope>
+            <version>ce3978f9f5</version>
         </dependency>
         <dependency>
-            <groupId>com.hawolt</groupId>
+            <groupId>com.github.hawolt.hawolt-core</groupId>
             <artifactId>IO</artifactId>
-            <version>1.031</version>
-            <scope>compile</scope>
+            <version>ce3978f9f5</version>
         </dependency>
     </dependencies>
 </project>
