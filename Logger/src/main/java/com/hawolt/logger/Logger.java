@@ -31,10 +31,17 @@ public class Logger {
 
     static {
         try {
+            RunLevel level = RunLevel.getLevel(Logger.class);
             InputStream dynamic = RunLevel.get("log.properties");
+            Logger.log(LogLevel.INTERNAL, true, "Logger Runlevel {}", level);
+            Logger.log(LogLevel.INTERNAL, true, "Properties available for {}:{}", dynamic != null);
+            if (dynamic == null) {
+                Logger.log(LogLevel.INTERNAL, true, "Attempting to locate log.properties in directory");
+            }
             try (InputStream stream = dynamic != null ? dynamic : Core.getFileAsStream(Paths.get("log.properties"))) {
                 load(stream);
             } catch (IOException e) {
+                Logger.log(LogLevel.INTERNAL, true, e.getMessage());
                 Logger.log(LogLevel.INTERNAL, true, "Unable to locate log.properties in default directory");
             }
         } catch (IOException e) {
