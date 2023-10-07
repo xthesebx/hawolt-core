@@ -5,19 +5,19 @@
     <parent>
         <artifactId>HawoltCore</artifactId>
         <groupId>com.hawolt</groupId>
-        <version>1.031</version>
+        <version>1.1</version>
     </parent>
+    <dependencies>
+        <dependency>
+            <groupId>com.hawolt</groupId>
+            <artifactId>IO</artifactId>
+            <version>1.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Logger</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.github.hawolt.hawolt-core</groupId>
-            <artifactId>IO</artifactId>
-            <version>28c644f767</version>
-        </dependency>
-    </dependencies>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

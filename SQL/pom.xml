@@ -5,7 +5,7 @@
     <parent>
         <artifactId>HawoltCore</artifactId>
         <groupId>com.hawolt</groupId>
-        <version>1.031</version>
+        <version>1.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -23,9 +23,10 @@
             <version>4.0.3</version>
         </dependency>
         <dependency>
-            <groupId>com.github.hawolt.hawolt-core</groupId>
+            <groupId>com.hawolt</groupId>
             <artifactId>IO</artifactId>
-            <version>28c644f767</version>
+            <version>1.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
