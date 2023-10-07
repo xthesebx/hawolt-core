@@ -34,7 +34,7 @@ public class Logger {
             RunLevel level = RunLevel.getLevel(Logger.class);
             InputStream dynamic = RunLevel.get("log.properties");
             Logger.log(LogLevel.INTERNAL, true, "Logger Runlevel {}", level);
-            Logger.log(LogLevel.INTERNAL, true, "Properties available for {}:{}", dynamic != null);
+            Logger.log(LogLevel.INTERNAL, true, "Properties available for {}:{}", level, dynamic != null);
             if (dynamic == null) {
                 Logger.log(LogLevel.INTERNAL, true, "Attempting to locate log.properties in directory");
             }
