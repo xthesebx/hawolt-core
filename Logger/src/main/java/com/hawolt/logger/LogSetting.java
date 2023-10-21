@@ -1,5 +1,7 @@
 package com.hawolt.logger;
 
+import java.util.Locale;
+
 public enum LogSetting {
     UNKNOWN,
     FORMAT_DATE,
@@ -24,6 +26,6 @@ public enum LogSetting {
 
     @Override
     public String toString() {
-        return name().toLowerCase().replaceAll("_", ".");
+        return name().toLowerCase(Locale.ENGLISH).replaceAll("_", ".");
     }
 }
