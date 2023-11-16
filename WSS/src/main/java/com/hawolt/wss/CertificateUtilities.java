@@ -1,12 +1,12 @@
 package com.hawolt.wss;
 
 import com.hawolt.cryptography.MD5;
+import jakarta.xml.bind.DatatypeConverter;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
