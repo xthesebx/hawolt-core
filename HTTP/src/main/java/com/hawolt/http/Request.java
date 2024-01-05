@@ -1,6 +1,8 @@
 package com.hawolt.http;
 
 
+import com.hawolt.http.misc.DownloadCallback;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -89,8 +91,11 @@ public class Request {
         return connection;
     }
 
-
     public Response execute() throws IOException {
         return new Response(prepare());
+    }
+
+    public Response execute(DownloadCallback callback) throws IOException {
+        return new Response(prepare(), callback);
     }
 }
