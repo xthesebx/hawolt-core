@@ -27,6 +27,7 @@ public class Logger {
     private static LogLevel MIN_LOG_LEVEL = LogLevel.ALL;
     private static String BASE_STRUCTURE = "";
     private static int ROLLOVER_INTERNAL = 0;
+    private static LogEncryption encryption;
     private static FileWriter WRITER;
 
     static {
@@ -63,7 +64,11 @@ public class Logger {
                     switch (setting) {
                         case BASE_STRUCTURE:
                             BASE_STRUCTURE = config[1];
-                            log(LogLevel.INTERNAL, true, "{}:{}", setting.name(), config[1]);
+                            String[] dataset = BASE_STRUCTURE.split(",");
+                            if (dataset.length >= 2) {
+                                String debug = "[" + LOG_DATE_FORMAT.format(new Date()) + "] [" + LogLevel.INTERNAL.name() + "] " + setting.name() + ":{[" + dataset[0] + "] [" + dataset[1] + "]}";
+                                write(LogLevel.INTERNAL, debug, true);
+                            }
                             break;
                         case FORMAT_DATE:
                             LOG_DATE_FORMAT = new SimpleDateFormat(config[1], Locale.US);
@@ -122,6 +127,10 @@ public class Logger {
         } catch (Exception e) {
             Logger.log(LogLevel.INTERNAL, true, "Error parsing provided property file");
         }
+    }
+
+    public static void setLogEncryption(LogEncryption encryption) {
+        Logger.encryption = encryption;
     }
 
     public static String format(String format, Object... objects) {
@@ -207,12 +216,16 @@ public class Logger {
         }
     }
 
-    private static void write(LogLevel level, String line, boolean linebreak) {
+    private static void write(LogLevel level, final String line, boolean linebreak) {
         ExecutorService service = Executors.newSingleThreadExecutor();
         Runnable runnable = () -> {
+            String lineToWrite = line;
+            if (Logger.encryption != null) {
+                lineToWrite = Logger.encryption.onBeforeWrite(line);
+            }
             synchronized (SYNCHRONIZED_LOCK) {
-                if (LOG_TO_FILE) writeToFile(line, linebreak);
-                if (LOG_TO_CONSOLE) writeToOutputStream(level, line, linebreak);
+                if (LOG_TO_FILE) writeToFile(lineToWrite, linebreak);
+                if (LOG_TO_CONSOLE) writeToOutputStream(level, lineToWrite, linebreak);
             }
         };
         service.execute(runnable);

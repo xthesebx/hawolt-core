@@ -21,6 +21,7 @@
         <module>Captcha</module>
         <module>WSS</module>
         <module>TaskHTTP</module>
+        <module>Elevator</module>
     </modules>
 
     <properties>
