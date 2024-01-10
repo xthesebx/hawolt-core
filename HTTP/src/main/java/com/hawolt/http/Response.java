@@ -4,7 +4,9 @@ import com.hawolt.http.misc.DownloadCallback;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +63,11 @@ public class Response {
     }
 
     public String getBodyAsString() {
-        return new String(body);
+        return new String(body, StandardCharsets.UTF_8);
+    }
+
+    public String getBodyAsString(String charset) throws UnsupportedEncodingException {
+        return new String(body, charset);
     }
 
     public Map<String, List<String>> getHeaders() {
