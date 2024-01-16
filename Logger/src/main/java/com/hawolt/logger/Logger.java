@@ -22,13 +22,14 @@ public class Logger {
     private final static Object SYNCHRONIZED_LOCK = new Object();
     private static SimpleDateFormat LOG_DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.US);
     private static SimpleDateFormat LOG_FILE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy_HH-mm-ss", Locale.US);
-    private static Path TARGET_DIRECTORY = Paths.get(System.getProperty("user.dir"));
-    private static boolean LOG_TO_FILE, LOG_TO_CONSOLE = true;
     private static LogLevel MIN_LOG_LEVEL = LogLevel.ALL;
+    private static boolean LOG_TO_CONSOLE = true;
     private static String BASE_STRUCTURE = "";
     private static int ROLLOVER_INTERNAL = 0;
     private static LogEncryption encryption;
     private static FileWriter WRITER;
+    public static Path TARGET_DIRECTORY = Paths.get(System.getProperty("user.dir"));
+    public static boolean LOG_TO_FILE;
 
     static {
         try {
