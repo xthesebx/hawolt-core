@@ -16,11 +16,23 @@ import java.nio.charset.StandardCharsets;
  *
  * <p>http://cryptofreek.org/2012/11/29/pbkdf2-pure-java-implementation/<br>
  * Modified to use SHA-512 - Ken Sedgwick ken@bonsai.com</p>
+ *
+ * @author Hawolt
+ * @version 1.1
  */
 
 
 //http://tools.ietf.org/html/rfc2898#section-5.2
 public class PBKDF2SHA512 {
+    /**
+     * <p>derive.</p>
+     *
+     * @param P a {@link java.lang.String} object
+     * @param S a {@link java.lang.String} object
+     * @param c a int
+     * @param dkLen a int
+     * @return an array of {@link byte} objects
+     */
     public static byte[] derive(String P, String S, int c, int dkLen) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

@@ -2,10 +2,22 @@ package com.hawolt.cli;
 
 import java.util.*;
 
+/**
+ * <p>CLI class.</p>
+ *
+ * @author Hawolt
+ * @version 1.1
+ */
 public class CLI extends HashSet<Argument> {
 
     private final Map<Argument, List<String>> INSTRUCTIONS = new HashMap<>();
 
+    /**
+     * <p>put.</p>
+     *
+     * @param arg a {@link com.hawolt.cli.Argument} object
+     * @throws com.hawolt.cli.ParserException if any.
+     */
     public void put(Argument arg) throws ParserException {
         for (Argument argument : INSTRUCTIONS.keySet()) {
             if (arg.isUnique() && (argument.getShortName().equals(arg.getShortName()) || argument.getLongName().equals(arg.getLongName()))) {
@@ -16,6 +28,12 @@ public class CLI extends HashSet<Argument> {
         INSTRUCTIONS.get(arg).add(arg.getValue());
     }
 
+    /**
+     * <p>has.</p>
+     *
+     * @param key a {@link java.lang.String} object
+     * @return a boolean
+     */
     public boolean has(String key) {
         for (Argument argument : INSTRUCTIONS.keySet()) {
             if (argument.getLongName().equals(key) || argument.getShortName().equals(key)) {
@@ -25,6 +43,12 @@ public class CLI extends HashSet<Argument> {
         return false;
     }
 
+    /**
+     * <p>get.</p>
+     *
+     * @param key a {@link java.lang.String} object
+     * @return a {@link java.util.List} object
+     */
     public List<String> get(String key) {
         for (Argument argument : INSTRUCTIONS.keySet()) {
             if (argument.getLongName().equals(key) || argument.getShortName().equals(key)) {
@@ -34,6 +58,12 @@ public class CLI extends HashSet<Argument> {
         return null;
     }
 
+    /**
+     * <p>getValue.</p>
+     *
+     * @param key a {@link java.lang.String} object
+     * @return a {@link java.lang.String} object
+     */
     public String getValue(String key) {
         for (Argument argument : INSTRUCTIONS.keySet()) {
             if (argument.getLongName().equals(key) || argument.getShortName().equals(key)) {
@@ -43,10 +73,21 @@ public class CLI extends HashSet<Argument> {
         return null;
     }
 
+    /**
+     * <p>isArgument.</p>
+     *
+     * @param s a {@link java.lang.String} object
+     * @return a boolean
+     */
     protected boolean isArgument(String s) {
         return s.startsWith("--") || s.startsWith("-");
     }
 
+    /**
+     * <p>getHelp.</p>
+     *
+     * @return a {@link java.lang.String} object
+     */
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
         builder.append(String.format("%-16s | %-9s | %-9s | %-9s | %-5s | %s\n", "Command", "Shortcut", "Required", "Argument", "Once", "Description"));
@@ -63,6 +104,12 @@ public class CLI extends HashSet<Argument> {
         return builder.toString();
     }
 
+    /**
+     * <p>convert.</p>
+     *
+     * @param in a {@link java.lang.String} object
+     * @return an array of {@link java.lang.String} objects
+     */
     public static String[] convert(String in) {
         String[] actual = new String[0];
         String[] basic = in.split(" ");

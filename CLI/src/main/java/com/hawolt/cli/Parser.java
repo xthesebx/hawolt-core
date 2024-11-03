@@ -1,7 +1,20 @@
 package com.hawolt.cli;
 
+/**
+ * <p>Parser class.</p>
+ *
+ * @author Hawolt
+ * @version 1.1
+ */
 public class Parser extends CLI {
 
+    /**
+     * <p>check.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects
+     * @return a {@link com.hawolt.cli.CLI} object
+     * @throws com.hawolt.cli.ParserException if any.
+     */
     public CLI check(String[] args) throws ParserException {
         CLI result = new CLI();
         for (Argument argument : this) {

@@ -12,11 +12,14 @@ import java.nio.file.Paths;
 /**
  * Created: 31/07/2022 00:09
  * Author: Twitter @hawolt
- **/
-
+ *
+ * @author Hawolt
+ * @version 1.1
+ */
 public enum RunLevel {
     JAR, FILE, UNKNOWN;
 
+    /** Constant <code>_LEVEL</code> */
     private static final RunLevel _LEVEL;
 
     static {
@@ -29,6 +32,12 @@ public enum RunLevel {
         }
     }
 
+    /**
+     * <p>getLevel.</p>
+     *
+     * @param klass a {@link java.lang.Class} object
+     * @return a {@link com.hawolt.io.RunLevel} object
+     */
     public static RunLevel getLevel(Class<?> klass) {
         URL url = klass.getResource(String.join(".", klass.getSimpleName(), "class"));
         if (url == null) {
@@ -39,14 +48,34 @@ public enum RunLevel {
         }
     }
 
+    /**
+     * <p>getLevel.</p>
+     *
+     * @return a {@link com.hawolt.io.RunLevel} object
+     */
     public static RunLevel getLevel() {
         return _LEVEL;
     }
 
+    /**
+     * <p>get.</p>
+     *
+     * @param file a {@link java.lang.String} object
+     * @return a {@link java.io.InputStream} object
+     * @throws java.io.IOException if any.
+     */
     public static InputStream get(String file) throws IOException {
         return get(file, _LEVEL);
     }
 
+    /**
+     * <p>get.</p>
+     *
+     * @param file a {@link java.lang.String} object
+     * @param level a {@link com.hawolt.io.RunLevel} object
+     * @return a {@link java.io.InputStream} object
+     * @throws java.io.IOException if any.
+     */
     public static InputStream get(String file, RunLevel level) throws IOException {
         switch (level) {
             case JAR:

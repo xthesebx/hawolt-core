@@ -2,6 +2,12 @@ package com.seb.io;
 
 import java.io.*;
 
+/**
+ * <p>Writer class.</p>
+ *
+ * @author xXTheSebXx
+ * @version 1.1
+ */
 public class Writer {
     /**
      * write text to a file

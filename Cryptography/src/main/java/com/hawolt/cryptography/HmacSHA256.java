@@ -8,10 +8,21 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Created: 06/12/2022 18:04
  * Author: Twitter @hawolt
- **/
-
+ *
+ * @author Hawolt
+ * @version 1.1
+ */
 public class HmacSHA256 {
 
+    /**
+     * <p>generate.</p>
+     *
+     * @param message a {@link java.lang.String} object
+     * @param key a {@link java.lang.String} object
+     * @return a {@link java.lang.String} object
+     * @throws java.security.InvalidKeyException if any.
+     * @throws java.security.NoSuchAlgorithmException if any.
+     */
     public static String generate(String message, String key) throws InvalidKeyException, NoSuchAlgorithmException {
         byte[] bytes = hmac(key.getBytes(), message.getBytes());
         return bytesToHex(bytes);

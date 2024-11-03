@@ -4,6 +4,12 @@ import org.json.JSONObject;
 
 import java.io.*;
 
+/**
+ * <p>Reader class.</p>
+ *
+ * @author xXTheSebXx
+ * @version 1.1
+ */
 public class Reader {
 
     /**

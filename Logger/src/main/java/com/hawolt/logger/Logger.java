@@ -18,6 +18,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * <p>Logger class.</p>
+ *
+ * @author Hawolt
+ * @version 1.1
+ */
 public class Logger {
     private final static Object SYNCHRONIZED_LOCK = new Object();
     private static SimpleDateFormat LOG_DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.US);
@@ -28,7 +34,9 @@ public class Logger {
     private static int ROLLOVER_INTERNAL = 0;
     private static LogEncryption encryption;
     private static FileWriter WRITER;
+    /** Constant <code>TARGET_DIRECTORY</code> */
     public static Path TARGET_DIRECTORY = Paths.get(System.getProperty("user.dir"));
+    /** Constant <code>LOG_TO_FILE=</code> */
     public static boolean LOG_TO_FILE;
 
     static {
@@ -55,6 +63,11 @@ public class Logger {
         }
     }
 
+    /**
+     * <p>load.</p>
+     *
+     * @param stream a {@link java.io.InputStream} object
+     */
     public static void load(InputStream stream) {
         try {
             String[] set = Core.read(stream).toString().split("\n");
@@ -130,10 +143,22 @@ public class Logger {
         }
     }
 
+    /**
+     * <p>setLogEncryption.</p>
+     *
+     * @param encryption a {@link com.hawolt.logger.LogEncryption} object
+     */
     public static void setLogEncryption(LogEncryption encryption) {
         Logger.encryption = encryption;
     }
 
+    /**
+     * <p>format.</p>
+     *
+     * @param format a {@link java.lang.String} object
+     * @param objects a {@link java.lang.Object} object
+     * @return a {@link java.lang.String} object
+     */
     public static String format(String format, Object... objects) {
         String[] base = BASE_STRUCTURE.split(",", 2);
         Object[] values = form(base, objects);
@@ -233,6 +258,14 @@ public class Logger {
         service.shutdown();
     }
 
+    /**
+     * <p>log.</p>
+     *
+     * @param level a {@link com.hawolt.logger.LogLevel} object
+     * @param linebreak a boolean
+     * @param format a {@link java.lang.String} object
+     * @param objects a {@link java.lang.Object} object
+     */
     public static void log(LogLevel level, boolean linebreak, String format, Object... objects) {
         if (level.ordinal() >= MIN_LOG_LEVEL.ordinal()) {
             String line = "[" + LOG_DATE_FORMAT.format(new Date()) + "] [" + level.name() + "] " + format(format, objects);
@@ -240,48 +273,108 @@ public class Logger {
         }
     }
 
+    /**
+     * <p>error.</p>
+     *
+     * @param throwable a {@link java.lang.Throwable} object
+     */
     public static void error(Throwable throwable) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         throwable.printStackTrace(new PrintStream(out));
         log(LogLevel.ERROR, false, "{}", out.toString());
     }
 
+    /**
+     * <p>fatal.</p>
+     *
+     * @param format a {@link java.lang.String} object
+     * @param objects a {@link java.lang.Object} object
+     */
     public static void fatal(String format, Object... objects) {
         log(LogLevel.FATAL, true, format, objects);
     }
 
+    /**
+     * <p>warn.</p>
+     *
+     * @param format a {@link java.lang.String} object
+     * @param objects a {@link java.lang.Object} object
+     */
     public static void warn(String format, Object... objects) {
         log(LogLevel.WARN, true, format, objects);
     }
 
+    /**
+     * <p>error.</p>
+     *
+     * @param format a {@link java.lang.String} object
+     * @param objects a {@link java.lang.Object} object
+     */
     public static void error(String format, Object... objects) {
         log(LogLevel.ERROR, true, format, objects);
     }
 
+    /**
+     * <p>info.</p>
+     *
+     * @param format a {@link java.lang.String} object
+     * @param objects a {@link java.lang.Object} object
+     */
     public static void info(String format, Object... objects) {
         log(LogLevel.INFO, true, format, objects);
     }
 
+    /**
+     * <p>debug.</p>
+     *
+     * @param format a {@link java.lang.String} object
+     * @param objects a {@link java.lang.Object} object
+     */
     public static void debug(String format, Object... objects) {
         log(LogLevel.DEBUG, true, format, objects);
     }
 
+    /**
+     * <p>fatal.</p>
+     *
+     * @param object a {@link java.lang.Object} object
+     */
     public static void fatal(Object object) {
         log(LogLevel.FATAL, true, "{}", object);
     }
 
+    /**
+     * <p>warn.</p>
+     *
+     * @param object a {@link java.lang.Object} object
+     */
     public static void warn(Object object) {
         log(LogLevel.WARN, true, "{}", object);
     }
 
+    /**
+     * <p>error.</p>
+     *
+     * @param object a {@link java.lang.Object} object
+     */
     public static void error(Object object) {
         log(LogLevel.ERROR, true, "{}", object);
     }
 
+    /**
+     * <p>info.</p>
+     *
+     * @param object a {@link java.lang.Object} object
+     */
     public static void info(Object object) {
         log(LogLevel.INFO, true, "{}", object);
     }
 
+    /**
+     * <p>debug.</p>
+     *
+     * @param object a {@link java.lang.Object} object
+     */
     public static void debug(Object object) {
         log(LogLevel.DEBUG, true, "{}", object);
     }
