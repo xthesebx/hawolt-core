@@ -12,6 +12,14 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Patcher {
 
+    public static void main(String[] args) throws Exception {
+        if (args.length == 2) {
+            patch(args[0], args[1]);
+        } else if (args.length == 3) {
+            patch(new URL(args[0]), args[1], args[2]);
+        }
+    }
+
     public static void patch(String url, String appName) throws IOException {
         patch(new URL(url), appName);
     }
@@ -45,7 +53,7 @@ public class Patcher {
             AtomicReference<String> downloadlink = new AtomicReference<>("");
             assets.forEach(asset -> {
                 if (((JSONObject) asset).getString("name").equals(appName))
-                    downloadlink.set(assets.getJSONObject(0).getString("browser_download_url"));
+                    downloadlink.set(((JSONObject) asset).getString("browser_download_url"));
             });
             try (BufferedInputStream bis = new BufferedInputStream(new URL(downloadlink.get()).openStream());
                  FileOutputStream fos = new FileOutputStream(appName)) {
