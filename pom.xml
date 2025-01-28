@@ -22,6 +22,7 @@
         <module>WSS</module>
         <module>TaskHTTP</module>
         <module>Elevator</module>
+        <module>Patcher</module>
     </modules>
 
     <properties>
